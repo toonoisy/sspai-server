@@ -23,7 +23,33 @@ router.get('/api/seriesBanner', async (ctx, next) => {
 	ctx.body = res.response.body
 })
 
+// 社区广场列表
+// 首次 https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=0
+// 更多 https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=20
+// 更多 https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=40
+router.get('/api/matrixList', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=0')
+  ctx.body = res.response.body
+})
 
+// 社区广场一派
+// https://sspai.com/api/v1/bullet/search/page/get?limit=1&offset=0
+router.get('/api/matrixYipai', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/bullet/search/page/get')
+	ctx.body = res.response.body
+})
+
+// 社区广场推荐关注
+router.get('/api/matrixCommend', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/user/worth/follow/page/get')
+	ctx.body = res.response.body
+})
+
+// 社区广场推荐专栏
+router.get('/api/matrixSpecial', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/special/column/search/page/get')
+	ctx.body = res.response.body
+})
 
 // 2. 运行并监听服务器
 app.listen(3001, (err) => {
