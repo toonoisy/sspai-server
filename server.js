@@ -100,6 +100,15 @@ router.get('/api/matrixSpecial', async (ctx, next) => {
   )
   ctx.body = res.response.body
 })
+
+// 全部专栏
+router.get('/api/matrixSpecialColumn', async (ctx, next) => {
+  let res = await fly.get(
+    'https://sspai.com/api/v1/special/column/search/page/get?limit=20&offset=0&created_at=1602590192'
+  )
+  ctx.body = res.response.body
+})
+
 // series 今日推荐
 router.get('/api/seriesRecommend', async (ctx, next) => {
   let res = await fly.get(
