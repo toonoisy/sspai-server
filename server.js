@@ -131,6 +131,43 @@ router.get('/api/seriesCategories', async (ctx, next) => {
   // console.log(res);
 })
 
+// w 商城首页数据
+router.get('/api/seetingInfo', async (ctx, next) => {
+  let res = await fly.get(
+    `https://sspai.com/api/v1/item/class/item/recommend/all/get?class_id=4`
+  )
+  ctx.body = res.response.body
+})
+// w 分类数据
+router.get('/api/bannerInfo', async (ctx, next) => {
+  let res = await fly.get('https://sspai.com/api/v1/item/class/sub/all/get')
+  ctx.body = res.response.body
+})
+
+// w 内容区数据
+router.get('/api/self', async (ctx, next) => {
+  let res = await fly.get('https://sspai.com/api/v1/item/recommend/all/get')
+  ctx.body = res.response.body
+})
+
+// w 根据点击分类列表筛选数据
+router.get('/api/switchInfo', async (ctx, next) => {
+  let { offset, class_id } = ctx.request.query
+
+  let res = await fly.get(
+    `https://sspai.com/api/v1/item/class/item/page/get?limit=12&offset=${offset}&class_id=${class_id}&platform_attribute=`
+  )
+  ctx.body = res.response.body
+})
+
+// w 详情页数据请求
+//sspai.com/api/v1/item/info/get?id=4
+router.get('/api/detailInfo', async (ctx, next) => {
+  let { id } = ctx.request.query
+  let res = await fly.get(`https://sspai.com/api/v1/item/info/get?id=${id}`)
+  ctx.body = res.response.body
+})
+
 // 运行并监听服务器
 app.listen(3001, (err) => {
   if (err) {
