@@ -168,6 +168,55 @@ router.get('/api/detailInfo', async (ctx, next) => {
   ctx.body = res.response.body
 })
 
+// 话题banner
+router.get('/api/getTopicsList', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/topic/search/page/get?limit=3&offset=0&recommend=true')
+	ctx.body = res.response.body
+})
+
+//  全部话题
+router.get('/api/getTopics', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/topic/search/page/get?limit=16&offset=0&created_at=1602342509')
+	ctx.body = res.response.body
+})
+
+//  点击切换
+router.get('/api/getTopicsAll', async (ctx, next) => {
+	let {tag} = ctx.request.query
+	let newTag = encodeURI(tag)
+	let res = await fly.get(`https://sspai.com/api/v1/topic/search/page/get?limit=16&offset=0&tag_title=${newTag}&created_at=1602465970`)
+	ctx.body = res.response.body
+})
+
+//  加载更多
+router.get('/api/getTopicsMore', async (ctx, next) => {
+	let res = await fly.get('https://sspai.com/api/v1/topic/search/page/get?limit=16&offset=80&tag_title=&created_at=1602432094')
+	ctx.body = res.response.body
+})
+
+// 详情页接口
+
+//  banner头部数据
+router.get('/api/getTopicDetailBanner', async (ctx, next) => {
+	let {topicId} = ctx.request.query
+	let res = await fly.get(`https://sspai.com/api/v1/topic/single/info/get?id=${topicId}`)
+	ctx.body = res.response.body
+})
+
+//  banner最新区域
+router.get('/api/getPostItem', async (ctx, next) => {
+	let {topicId} = ctx.request.query
+	let res = await fly.get(`https://sspai.com/api/v1/article/topic/page/get?limit=10&offset=0&topic_id=${topicId}&created_at=1602469649`)
+	ctx.body = res.response.body
+})
+
+//  banner推荐区域
+router.get('/api/getRecommend', async (ctx, next) => {
+	let {topicId} = ctx.request.query
+	let res = await fly.get(`https://sspai.com/api/v1/article/topic/page/get?limit=2&offset=0&topic_id=${topicId}&recommend=true`)
+	ctx.body = res.response.body
+})
+
 // 运行并监听服务器
 app.listen(3001, (err) => {
   if (err) {
