@@ -74,8 +74,9 @@ router.get('/api/seriesBanner', async (ctx, next) => {
 // 更多 https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=20
 // 更多 https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=40
 router.get('/api/matrixList', async (ctx, next) => {
+  let {offset, limit} = ctx.query
   let res = await fly.get(
-    'https://sspai.com/api/v1/article/matrix/page/get?limit=20&offset=0'
+    `https://sspai.com/api/v1/article/matrix/page/get?limit=${limit}&offset=${offset}`
   )
   ctx.body = res.response.body
 })
